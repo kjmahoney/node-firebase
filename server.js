@@ -1,3 +1,5 @@
+const firebase = require('firebase');
+const database = firebase.database();
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
@@ -17,6 +19,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger('dev'));
 
 app.get('/', (request, response) => {
+  let wordRef = database.ref("/");
+
+  console.log(wordRef);
+
   response.render('home.ejs');
 })
 

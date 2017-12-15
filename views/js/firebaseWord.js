@@ -8,15 +8,12 @@ form.onsubmit = (event) => {
   const pinyinWord = document.getElementById('pinyinField').value;
 
   let word = {
-     [englishWord] : {
       chinese: chineseWord,
+      english: englishWord,
       pinyin: pinyinWord
     }
-  }
-
-  console.log(word);
 
   const database = firebase.database();
   const wordRef = database.ref('/')
-  return wordRef.set(word);
+  wordRef.push(word);
 }
