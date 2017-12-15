@@ -32,19 +32,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger('dev'));
 
 app.get('/', (request, response) => {
-  let wordRef = database.ref("/");
-
-  wordRef.on('value', (snapshot) => {
-    console.log(snapshot.val());
-    response.render('home.ejs', { words: snapshot.val() });
-  })
+  response.render('home.ejs');
+  //add new vocab list of 5 latest
 })
 
 app.post('/', (request, response) => {
-  let chinese = request.body.chinese;
+  console.log('working');
+  const englishWord = request.body.englishField;
+  const chineseWord = request.body.chineseField;
+  const pinyinWord = request.body.pinyinField;
 
-  response.render('results.ejs', {data: chinese})
-})
+  const wordRef = database.ref('/');
+
+  wordRef.update({ [chineseWord]: {
+      english: englishWord,
+      pinyin: pinyinWord
+    }
+  })
+  response.render('home.ejs');
+});
 
 app.listen(port, () => {
   console.log(`App Running on ${port}`);
