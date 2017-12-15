@@ -25,6 +25,13 @@
       <p>pinyin: <input id="pinyinField" name="pinyinField" /></p>
       <button type="submit">Submit</button>
     </form>
+    <% let keys = Object.keys(words) %>
+    <% keys.forEach((key) => { %>
+      <p><%= words[key].chinese %></p>
+      <p><%= words[key].english %></p>
+      <p><%= words[key].pinyin %></p>
+    <%})%>
+
     <script src="js/firebaseWord.js" charset="utf-8"></script>
   </body>
 </html>

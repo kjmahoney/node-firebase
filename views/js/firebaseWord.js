@@ -1,6 +1,6 @@
-const form = document.getElementById('wordForm');
+const newWordform = document.getElementById('wordForm');
 
-form.onsubmit = (event) => {
+newWordform.onsubmit = (event) => {
   event.preventDefault();
 
   const englishWord = document.getElementById('englishField').value;

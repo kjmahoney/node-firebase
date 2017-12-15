@@ -1,13 +1,26 @@
-const firebase = require('firebase');
-const database = firebase.database();
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 
 const app = express();
-
 const port = process.env.PORT || 4000;
 
+//DB
+const firebase = require('firebase');
+
+const config = {
+  apiKey: "AIzaSyC8j4JVy9MJj4nwXUUldC3dYW68KxFhcVk",
+  authDomain: "chinese-37eef.firebaseapp.com",
+  databaseURL: "https://chinese-37eef.firebaseio.com",
+  projectId: "chinese-37eef",
+  storageBucket: "chinese-37eef.appspot.com",
+  messagingSenderId: "966769493570"
+};
+firebase.initializeApp(config);
+
+const database = firebase.database();
+
+//App
 app.set('view engine', 'ejs');
 
 app.use(express.static('views'));
@@ -21,9 +34,10 @@ app.use(logger('dev'));
 app.get('/', (request, response) => {
   let wordRef = database.ref("/");
 
-  console.log(wordRef);
-
-  response.render('home.ejs');
+  wordRef.on('value', (snapshot) => {
+    console.log(snapshot.val());
+    response.render('home.ejs', { words: snapshot.val() });
+  })
 })
 
 app.post('/', (request, response) => {
