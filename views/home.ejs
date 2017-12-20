@@ -25,6 +25,17 @@
       <p>pinyin: <input id="pinyinField" name="pinyinField" /></p>
       <button type="submit">Submit</button>
     </form>
+    <%= Object.values(data) %>
+    <% for (var key in data) {%>
+      <p><%=key%></p>
+      <p><%=data[key].english%></p>
+      <p><%=data[key].pinyin%></p>
+    <% } %>
+
+    <% Object.keys(data).forEach((prop) => { %>
+       <p><%= prop %></p>
+       <p><%=Object.values(prop)%> </p>
+    <%  }) %>
     <script src="js/firebaseWord.js" charset="utf-8"></script>
   </body>
 </html>

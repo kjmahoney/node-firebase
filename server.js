@@ -32,7 +32,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger('dev'));
 
 app.get('/', (request, response) => {
-  response.render('home.ejs');
+  const ref = database.ref('/');
+
+  ref.on('value', (snapshot) => {
+    let dataArray = [];
+    const data = snapshot.val();
+    response.render('home.ejs', {data: data});
+  })
   //add new vocab list of 5 latest
 })
 
@@ -49,6 +55,7 @@ app.post('/', (request, response) => {
       pinyin: pinyinWord
     }
   })
+  console.log(wordRef);
   response.render('home.ejs');
 });
 
